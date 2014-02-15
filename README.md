@@ -64,8 +64,8 @@ be deterministic that the first copy of duplicate lines would be kept and subseq
 copies removed. This comes from the guarantee of the ordering of messages from one
 actor to another. With the consistent hashing algorithm, the same actor will always
 process all the duplicates of a line. To put the file back together again in the original
-order would be difficult, and the use of a database or filesystem would be a big help
-here to provide the sorting.
+order would be difficult, and the use of a database or filesystem (e.g. temporary files) would
+be a big help here to provide the sorting.
 
 ###Still work to do###
 I didn't have the time yet to properly unit test the code. There is a scala
