@@ -58,14 +58,16 @@ the persistence provided by the database could make the work restartable in case
 failure. The downside, of course, is that the program would not perform as well since
 the data would need to be written to the commit logs before the write operations are
 able to complete.
-2. Preserve order. To preserve the original order of the lines, a line number could be attached
-to each line. Because the input file is read in order by the FileProcessor, it should
-be deterministic that the first copy of duplicate lines would be kept and subsequent
-copies removed. This comes from the guarantee of the ordering of messages from one
-actor to another. With the consistent hashing algorithm, the same actor will always
-process all the duplicates of a line. To put the file back together again in the original
-order would be difficult, and the use of a database or filesystem (e.g. temporary files) would
-be a big help here to provide the sorting.
+2. Preserve order. To preserve the original order of the lines, one way would be to
+ attach a line number to each line. Because the input file is read in order by the
+FileProcessor, it should be deterministic that the first copy of duplicate lines would
+be kept and subsequent copies removed. This comes from the guarantee of the ordering of
+messages from one actor to another. With the consistent hashing algorithm, the same actor
+will always process all the duplicates of a line.
+
+However, to put the file back together again in the original order would be difficult
+with an asynchronous system such as akka. Here the use of a database or filesystem
+(e.g. temporary files) would be a big help to provide sorting by line number.
 
 ###Still work to do###
 I didn't have the time yet to properly unit test the code. There is a scala
