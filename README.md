@@ -51,25 +51,24 @@ actor goes down then that work is lost. Recovery would be possible with the use
 of a database, see below.
 
 ###Alternative Implementations###
-1. Use a database. Use of a distributed database such as Cassandra or Riak, et al.,
+1. **Use a database**. Use of a distributed database such as Cassandra or Riak, et al.,
 would make the use of multiple actors less significant for solving this problem since
 the database already has consistent hashing across multiple machines. Futhermore,
 the persistence provided by the database could make the work restartable in case of
 failure. The downside, of course, is that the program would not perform as well since
 the data would need to be written to the commit logs before the write operations are
 able to complete.
-2. Preserve order. To preserve the original order of the lines, one way would be to
+2. **Preserve order**. To preserve the original order of the lines, one way would be to
  attach a line number to each line. Because the input file is read in order by the
 FileProcessor, it should be deterministic that the first copy of duplicate lines would
 be kept and subsequent copies removed. This comes from the guarantee of the ordering of
 messages from one actor to another. With the consistent hashing algorithm, the same actor
-will always process all the duplicates of a line.
+will always process all the duplicates of a line. However, to put the file back together
+again in the original order would be difficult with an asynchronous system such as akka.
+Here the use of a database or filesystem (e.g. temporary files) would be a big help to
+provide sorting by line number.
 
-However, to put the file back together again in the original order would be difficult
-with an asynchronous system such as akka. Here the use of a database or filesystem
-(e.g. temporary files) would be a big help to provide sorting by line number.
-
-###Still work to do###
+###To Do###
 I didn't have the time yet to properly unit test the code. There is a scala
-workspace, however, that can generate large files with random content
-including duplicates.
+workspace (generate.sc), however, in the test resources directory that can generate
+large files with random content including duplicates.
