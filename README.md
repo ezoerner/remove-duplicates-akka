@@ -15,7 +15,7 @@ Solution
 --------
 
 To run the solution, cd to the project directory and run:
-> sbt
+> sbt  
 > run src/test/resources/test.txt out.txt
 
 The test.txt file is a randomly generated input file and out.txt is
