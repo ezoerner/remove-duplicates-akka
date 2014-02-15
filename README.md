@@ -68,6 +68,6 @@ order would be difficult, and the use of a database or filesystem would be a big
 here to provide the sorting.
 
 ###Still work to do###
-I didn't take the time to properly unit test the code. There is a scala
+I didn't have the time yet to properly unit test the code. There is a scala
 workspace, however, that can generate large files with random content
 including duplicates.
