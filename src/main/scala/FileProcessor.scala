@@ -46,7 +46,9 @@ class FileProcessor extends Actor {
       out.println(line)
     case Done =>
       numChildrenDone += 1
-      if (numChildrenDone >= numChildren)
+      if (numChildrenDone >= numChildren) {
+        out.close()
         context.stop(self)
+      }
   }
 }
