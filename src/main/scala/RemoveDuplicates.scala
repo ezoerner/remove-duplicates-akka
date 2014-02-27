@@ -21,8 +21,9 @@ case class ProcessLine(line: String) extends ConsistentHashable {
 // Request the lines
 case object GetLines
 
-// Notify line has been processed
-case object LineProcessed
+// Notify line has been processed (duplicate) or send back the
+// non-duplicate line
+case class LineProcessed(line: Option[String])
 
 // Notify done sending results
 case object Done

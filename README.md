@@ -1,6 +1,7 @@
 So here is a classical problem:
 
-  * We a have large dataset represented as a set of lines in the text file. And large means that it cannot fit in a single machine memory for sure.
+  * We a have large dataset represented as a set of lines in the text file.
+    And large means that it cannot fit in a single machine memory for sure.
   * We need to remove all duplicate lines in it.
   * Order of the lines in the final result is not important.
 
@@ -40,9 +41,9 @@ The object structure of the application is as follows:
 
 The lines in the file are sent in messages from the FileProcessor to the LineProcessors
 via the router. The LineProcessor notifies the FileProcessor when it is has finished
-processing the line. When all lines have been processed, the FileProcessor sends a
-broadcast message to all the LineProcessors to send it all the non-duplicate lines,
-which it then outputs to the output file.
+processing the line, passing back the line itself if not a duplicate, otherwise passes "None".
+The FileProcessor writes the lines it gets back immediately to the output file.
+When all lines have been processed we're done (close the files).
 
 With this solution, the original order of the lines is not preserved.
 

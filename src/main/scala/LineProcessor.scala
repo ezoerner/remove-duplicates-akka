@@ -15,19 +15,11 @@ class LineProcessor extends Actor {
 
   def receive = {
     case ProcessLine(line: String) => processLine(line: String)
-    case GetLines => sendLines(lines)
   }
 
-  private def sendLines(lines: Iterable[String]): Unit =
-    if (lines.isEmpty)
-      sender ! Done
-    else {
-      sender ! ProcessLine(lines.head)
-      sendLines(lines.tail)
-    }
-
-  private def processLine(line: String) = {
-    lines add line
-    sender ! LineProcessed
-  }
+  private def processLine(line: String) =
+    if (lines add line)
+      sender ! LineProcessed(Some(line))
+    else
+      sender ! LineProcessed(None)
 }

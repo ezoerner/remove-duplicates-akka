@@ -35,18 +35,14 @@ class FileProcessor extends Actor {
     case ProcessFile(inFilename: String, outFilename: String) =>
       processFile(inFilename: String)
       out = new PrintWriter(outFilename)
-    case LineProcessed =>
+
+    case LineProcessed(line: Option[String]) =>
       awaitingCount -= 1
+      if (line.isDefined)
+        out.println(line.get)
+
       if (awaitingCount <= 0) {
         Console.out.println(s"Finished processing $lineCount lines.")
-        Console.out.println("Requesting results..")
-        router ! Broadcast(GetLines)
-      }
-    case ProcessLine(line) =>
-      out.println(line)
-    case Done =>
-      numChildrenDone += 1
-      if (numChildrenDone >= numChildren) {
         out.close()
         context.stop(self)
       }
