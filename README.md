@@ -73,3 +73,5 @@ provide sorting by line number.
 I didn't have the time yet to properly unit test the code. There is a scala
 workspace (generate.sc), however, in the test resources directory that can generate
 large files with random content including duplicates.
+
+With thanks to Lucian Cancescu for his idea for performance improvement.
