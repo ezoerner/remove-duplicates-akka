@@ -21,6 +21,8 @@ class FileProcessor extends Actor {
   val router = context.actorOf(LineProcessor.props.withRouter(FromConfig()), "lineProcessorRouter")
   val numChildren = ConfigFactory.load().getInt("akka.actor.deployment./fileProcessor/lineProcessorRouter.nr-of-instances")
   var numChildrenDone = 0
+  val startTime = System.currentTimeMillis()
+  var firstLineOutput = false
 
   def processFile(inFilename: String) = {
     for (file1 <- managed(Source.fromFile(inFilename));
@@ -38,8 +40,13 @@ class FileProcessor extends Actor {
 
     case LineProcessed(line: Option[String]) =>
       awaitingCount -= 1
-      if (line.isDefined)
+      if (line.isDefined) {
         out.println(line.get)
+        if (!firstLineOutput) {
+          firstLineOutput = true
+          Console.out.println("TIME: " + (System.currentTimeMillis() - startTime))
+        }
+      }
 
       if (awaitingCount <= 0) {
         Console.out.println(s"Finished processing $lineCount lines.")

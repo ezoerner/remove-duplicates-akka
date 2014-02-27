@@ -49,17 +49,27 @@ class RemoveDuplicatesSpec extends FlatSpec with Matchers {
 
   def countLines(file: File): Int = Source.fromFile(file).getLines.size
 
-  "RemoveDuplicates" should "produce correct output for small input file" in withFile(5, 21) { (inFile, outFile) =>
-    Console.out.println("input path=" + inFile.getPath)
-    Console.out.println("output path=" + outFile.getPath)
-    RemoveDuplicates.main(Array(inFile.getPath, outFile.getPath))
-    countLines(outFile) should be (5)
+  "RemoveDuplicates" should "produce correct output for small input file" in withFile(5, 21) {
+    (inFile, outFile) =>
+      Console.out.println("input path=" + inFile.getPath)
+      Console.out.println("output path=" + outFile.getPath)
+      RemoveDuplicates.main(Array(inFile.getPath, outFile.getPath))
+      countLines(outFile) should be (5)
   }
 
-  "RemoveDuplicates" should "produce correct output for larger input file" in withFile(3000, 120) { (inFile, outFile) =>
-    Console.out.println("input path=" + inFile.getPath)
-    Console.out.println("output path=" + outFile.getPath)
-    RemoveDuplicates.main(Array(inFile.getPath, outFile.getPath))
-    countLines(outFile) should be (3000)
+  "RemoveDuplicates" should "produce correct output for larger input file" in withFile(3000, 120) {
+    (inFile, outFile) =>
+      Console.out.println("input path=" + inFile.getPath)
+      Console.out.println("output path=" + outFile.getPath)
+      RemoveDuplicates.main(Array(inFile.getPath, outFile.getPath))
+      countLines(outFile) should be (3000)
   }
+
+  "RemoveDuplicates" should "produce correct output for even larger input file" in withFile(1000000, 120) {
+    (inFile, outFile) =>
+      Console.out.println("input path=" + inFile.getPath)
+      Console.out.println("output path=" + outFile.getPath)
+      RemoveDuplicates.main(Array(inFile.getPath, outFile.getPath))
+      countLines(outFile) should be (1000000)
+    }
 }
