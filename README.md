@@ -69,9 +69,4 @@ again in the original order would be difficult with an asynchronous system such 
 Here the use of a database or filesystem (e.g. temporary files) would be a big help to
 provide sorting by line number.
 
-###To Do###
-I didn't have the time yet to properly unit test the code. There is a scala
-workspace (generate.sc), however, in the test resources directory that can generate
-large files with random content including duplicates.
-
 With thanks to Lucian Cancescu for his idea for performance improvement.
