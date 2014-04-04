@@ -1,7 +1,7 @@
 So here is a classical problem:
 
   * We a have large dataset represented as a set of lines in the text file.
-    And large means that it cannot fit in a single machine memory for sure.
+    The file is too large to fit in a single machine memory.
   * We need to remove all duplicate lines in it.
   * Order of the lines in the final result is not important.
 
@@ -60,13 +60,13 @@ failure. The downside, of course, is that the program would not perform as well 
 the data would need to be written to the commit logs before the write operations are
 able to complete.
 2. **Preserve order**. To preserve the original order of the lines, one way would be to
- attach a line number to each line. Because the input file is read in order by the
-FileProcessor, it should be deterministic that the first copy of duplicate lines would
-be kept and subsequent copies removed. This comes from the guarantee of the ordering of
-messages from one actor to another. With the consistent hashing algorithm, the same actor
-will always process all the duplicates of a line. However, to put the file back together
-again in the original order would be difficult with an asynchronous system such as akka.
-Here the use of a database or filesystem (e.g. temporary files) would be a big help to
-provide sorting by line number.
+attach a line number to each line. The line processors to keep an index of the line numbers
+for the lines. Instead of using consistent hashing for routing, use
+partitioning based on ranges of line numbers. The line processors must wait until the end of
+file processing before output is sent. When the line processors send their
+output back to the file processor they do so in an "orderly" fashion, coordinated by the
+file processor, going from one partition to another in order. Each output line is acknowledged
+by the file processor before the next line is sent. This could also be done in batches of
+lines in contiguous order. 
 
 With thanks to Lucian Cancescu for his idea for performance improvement.
