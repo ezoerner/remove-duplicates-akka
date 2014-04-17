@@ -1,11 +1,11 @@
-So here is a classical problem:
+Classic problem (often used in interview coding assignments):
 
   * We a have large dataset represented as a set of lines in the text file.
     The file is too large to fit in a single machine memory.
   * We need to remove all duplicate lines in it.
   * Order of the lines in the final result is not important.
 
-How would you approach it having Akka/Scala in your toolbelt?
+How would you approach it using Akka?
 You are free to use akka-cluster or/and remoting if necessary.
 You are free to use more than one machine for processing.
 
