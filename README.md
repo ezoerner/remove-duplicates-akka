@@ -1,4 +1,4 @@
-Classic problem (often used in interview coding assignments):
+Classic problem (e.g. used in interview coding assignments):
 
   * We a have large dataset represented as a set of lines in the text file.
     The file is too large to fit in a single machine memory.
